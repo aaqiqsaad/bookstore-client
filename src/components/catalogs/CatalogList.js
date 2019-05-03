@@ -1,24 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchTokens } from '../../actions';
+import { fetchCatalogs } from '../../actions';
 
 
 
-class TokenList extends React.Component {
+class CatalogList extends React.Component {
 
     componentDidMount() {
-        this.props.fetchTokens();
+        this.props.fetchCatalogs();
     }
 
-    renderAdmin(token) {
-        if(token.createdBy === this.props.currentUserId) {
+    renderAdmin(catalog) {
+        if(catalog.createdBy === this.props.currentUserId) {
             return (
                 <div className="right floated content">
-                    <Link to={`/tokens/edit/${token.id}`} className="ui button primary">
+                    <Link to={`/catalogs/edit/${catalog.id}`} className="ui button primary">
                         Edit
                     </Link>
-                    <Link to={`/tokens/delete/${token.id}`} className="ui button negative">
+                    <Link to={`/catalogs/delete/${catalog.id}`} className="ui button negative">
                         Delete
                     </Link>
                 </div>
@@ -27,17 +27,17 @@ class TokenList extends React.Component {
     }
 
     renderList() {
-        return this.props.streams.map(token => {
+        return this.props.streams.map(catalog => {
             return (
-                <div className="item" key={token.id}>
-                    {this.renderAdmin(token)}
+                <div className="item" key={catalog.id}>
+                    {this.renderAdmin(catalog)}
                     <i className="large middle aligned icon camera" />
                     <div className="content">
-                        <Link to={`/tokens/${token.id}`} className="header" >
-                            {token.ticker}
+                        <Link to={`/catalogs/${catalog.id}`} className="header" >
+                            {catalog.ticker}
                         </Link>
                         <div className="description">
-                            {token.supply}
+                            {catalog.supply}
                         </div>
                     </div>
                 </div>
@@ -49,8 +49,8 @@ class TokenList extends React.Component {
         if(this.props.isSignedIn) {
             return (
                 <div style={{ textAlign: 'right' }}>
-                    <Link to="/tokens/new" className="ui button primary">
-                        Create Token
+                    <Link to="/catalogs/new" className="ui button primary">
+                        Create Catalog
                     </Link>
                 </div>
             );
@@ -60,7 +60,7 @@ class TokenList extends React.Component {
     render () {
         return (
             <div>
-                <h2>Tokens</h2>
+                <h2>Catalogs</h2>
                 <div className="ui celled list">
                     {this.renderList()}
                 </div>
@@ -73,10 +73,10 @@ class TokenList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        streams: Object.values(state.tokens),
+        streams: Object.values(state.catalogs),
         currentUserId: state.auth.userId,
         isSignedIn: state.auth.isSignedIn
     };
 };
 
-export default connect(mapStateToProps, { fetchTokens })(TokenList);
+export default connect(mapStateToProps, { fetchCatalogs })(CatalogList);

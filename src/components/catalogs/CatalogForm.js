@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 
-class TokenForm extends React.Component {
+class CatalogForm extends React.Component {
 
     renderError({error, touched}) {
         if(touched && error) {
@@ -58,6 +58,6 @@ const validate = (formValues) => {
 
 
 export default reduxForm({
-    form: 'tokenForm',
+    form: 'catalogForm',
     validate
-})(TokenForm);
+})(CatalogForm);

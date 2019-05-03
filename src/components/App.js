@@ -1,13 +1,12 @@
 import React from 'react';
 import { Router, Route, Switch } from "react-router-dom";
-import TokenCreate from './tokens/TokenCreate';
-import TokenShow from './tokens/TokenShow';
-import TokenEdit from './tokens/TokenEdit';
-import TokenDelete from './tokens/TokenDelete';
-import TokenList from './tokens/TokenList';
+import CatalogCreate from './catalogs/CatalogCreate';
+import CatalogShow from './catalogs/CatalogShow';
+import CatalogEdit from './catalogs/CatalogEdit';
+import CatalogDelete from './catalogs/CatalogDelete';
+import CatalogList from './catalogs/CatalogList';
 import Header from './Header';
 import history from '../history';
-
 
 const App = () => {
     return (
@@ -16,11 +15,11 @@ const App = () => {
                 <div>
                     <Header />
                     <Switch>
-                        <Route path="/" exact component={TokenList} />
-                        <Route path="/tokens/new" exact component={TokenCreate} />
-                        <Route path="/tokens/edit/:id" exact component={TokenEdit} />
-                        <Route path="/tokens/delete/:id" exact component={TokenDelete} />
-                        <Route path="/tokens/:id" exact component={TokenShow} />
+                        <Route path="/" exact component={CatalogList} />
+                        <Route path="/catalogs/new" exact component={CatalogCreate} />
+                        <Route path="/catalogs/edit/:id" exact component={CatalogEdit} />
+                        <Route path="/catalogs/delete/:id" exact component={CatalogDelete} />
+                        <Route path="/catalogs/:id" exact component={CatalogShow} />
                     </Switch>
                 </div>
             </Router>

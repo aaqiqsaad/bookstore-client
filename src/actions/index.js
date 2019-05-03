@@ -1,12 +1,12 @@
-import tokens from '../apis/tokens';
+import catalogs from '../apis/catalogs';
 import {
     SIGN_IN,
     SIGN_OUT,
-    CREATE_TOKEN,
-    FETCH_TOKEN,
-    FETCH_TOKENS,
-    DELETE_TOKEN,
-    EDIT_TOKEN
+    CREATE_CATALOG,
+    FETCH_CATALOG,
+    FETCH_CATALOGS,
+    DELETE_CATALOG,
+    EDIT_CATALOG
 } from "./types";
 import history from '../history';
 
@@ -23,33 +23,34 @@ export const signOut = () => {
     };
 };
 
-export const createToken = formValues => async (dispatch, getState) => {
+export const createCatalog = formValues => async (dispatch, getState) => {
     const { userId } = getState().auth;
     const createdBy = userId;
-    const response = await tokens.post('/tokens', { ...formValues, createdBy });
-    dispatch({ type: CREATE_TOKEN, payload: response.data });
+    const response = await catalogs.post('/tokens', { ...formValues, createdBy });
+    dispatch({ type: CREATE_CATALOG, payload: response.data });
     history.push('/');
 };
 
-export const editToken = (id, formValues) => async dispatch => {
-    const response = await tokens.put(`/tokens/${id}`, formValues);
-    dispatch({ type: EDIT_TOKEN, payload: response.data });
+export const editCatalog = (id, formValues) => async dispatch => {
+    const response = await catalogs.put(`/tokens/${id}`, formValues);
+    dispatch({ type: EDIT_CATALOG, payload: response.data });
     history.push('/');
 };
 
-export const fetchTokens = () => async dispatch => {
-    const response = await tokens.get('/tokens');
-    dispatch({ type: FETCH_TOKENS, payload: response.data });
+export const fetchCatalogs = () => async dispatch => {
+    const response = await catalogs.get('/tokens');
+    dispatch({ type: FETCH_CATALOGS, payload: response.data });
 };
 
-export const fetchToken = id => async dispatch => {
-    const response = await tokens.get(`/tokens/${id}`);
-    dispatch({ type: FETCH_TOKEN, payload: response.data });
+export const fetchCatalog = id => async dispatch => {
+    const response = await catalogs.get(`/tokens/${id}`);
+    dispatch({ type: FETCH_CATALOG, payload: response.data });
 };
 
-export const deleteToken = id => async dispatch => {
-    await tokens.delete(`/tokens/${id}`);
-    dispatch({ type: DELETE_TOKEN, payload: id });
+export const deleteCatalog = id => async dispatch => {
+    await catalogs.delete(`/tokens/${id}`);
+    dispatch({ type: DELETE_CATALOG, payload: id });
     history.push('/');
 };
+
 

@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import history from '../../history';
-import {fetchToken, deleteToken} from "../../actions";
+import {fetchCatalog, deleteCatalog} from "../../actions";
 
-class TokenDelete extends React.Component {
+class CatalogDelete extends React.Component {
 
     componentDidMount() {
-        this.props.fetchToken(this.props.match.params.id);
+        this.props.fetchCatalog(this.props.match.params.id);
     }
 
     renderAction() {
@@ -20,23 +20,23 @@ class TokenDelete extends React.Component {
 
         return (
             <React.Fragment>
-                <button onClick={ () => this.props.deleteToken(id) } className="ui button negative">Delete</button>
+                <button onClick={ () => this.props.deleteCatalog(id) } className="ui button negative">Delete</button>
                 <Link to="/" className="ui button">Cancel</Link>
             </React.Fragment>
         );
     }
 
     renderContent() {
-        if (!this.props.token) {
-            return 'Are you sure you want to delete this token?';
+        if (!this.props.catalog) {
+            return 'Are you sure you want to delete this catalog?';
         }
-        return `Are you sure you want to delete this token: ${this.props.token.ticker}?`;
+        return `Are you sure you want to delete this catalog: ${this.props.catalog.ticker}?`;
     }
 
     render() {
         return (
             <Modal
-                title="Delete Token"
+                title="Delete Catalog"
                 content={this.renderContent()}
                 actions={this.renderAction()}
                 onDismiss={() => history.push('/')}
@@ -47,7 +47,7 @@ class TokenDelete extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return {token: state.tokens[ownProps.match.params.id]}
+    return {catalog: state.catalogs[ownProps.match.params.id]}
 };
 
-export default connect(mapStateToProps, {fetchToken, deleteToken})(TokenDelete);
+export default connect(mapStateToProps, {fetchCatalog, deleteCatalog})(CatalogDelete);
