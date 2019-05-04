@@ -19,8 +19,8 @@ class CatalogShow extends React.Component {
         }
         return (
             <div>
-                <h1>{this.props.catalog.ticker}</h1>
-                <h5>{this.props.catalog.supply}</h5>
+                <h5>{this.props.catalog.title}</h5>
+                <h5>{this.props.catalog.author}</h5>
             </div>
         );
     }

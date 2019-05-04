@@ -35,8 +35,8 @@ class CatalogForm extends React.Component {
     render () {
         return (
             <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-                <Field name="ticker" component={this.renderInput} label="Enter Ticker" />
-                <Field name="supply" component={this.renderInput} label="Enter the Supply" />
+                <Field name="title" component={this.renderInput} label="Enter the Title" />
+                <Field name="author" component={this.renderInput} label="Enter the Author" />
                 <button className="ui button primary">Submit</button>
             </form>
         );
@@ -46,11 +46,11 @@ class CatalogForm extends React.Component {
 const validate = (formValues) => {
     const errors = {};
 
-    if(!formValues.ticker) {
-        errors.ticker = 'You must enter a ticker';
+    if(!formValues.title) {
+        errors.title = 'You must enter a Title';
     }
-    if(!formValues.supply) {
-        errors.supply = 'You must enter a supply';
+    if(!formValues.author) {
+        errors.author = 'You must enter the name of the author';
     }
 
     return errors;

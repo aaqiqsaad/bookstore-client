@@ -34,10 +34,10 @@ class CatalogList extends React.Component {
                     <i className="large middle aligned icon camera" />
                     <div className="content">
                         <Link to={`/catalogs/${catalog.id}`} className="header" >
-                            {catalog.ticker}
+                            {catalog.title}
                         </Link>
                         <div className="description">
-                            {catalog.supply}
+                            {catalog.author}
                         </div>
                     </div>
                 </div>

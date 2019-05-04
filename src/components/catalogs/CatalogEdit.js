@@ -26,7 +26,7 @@ class CatalogEdit extends React.Component {
             <div>
                 <h3>Edit a catalog</h3>
                 <CatalogForm
-                    initialValues={_.pick(this.props.catalog, 'ticker', 'supply')}
+                    initialValues={_.pick(this.props.catalog, 'title', 'author')}
                     onSubmit={this.onSubmit}
                 />
             </div>

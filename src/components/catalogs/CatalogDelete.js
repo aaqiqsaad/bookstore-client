@@ -30,7 +30,7 @@ class CatalogDelete extends React.Component {
         if (!this.props.catalog) {
             return 'Are you sure you want to delete this catalog?';
         }
-        return `Are you sure you want to delete this catalog: ${this.props.catalog.ticker}?`;
+        return `Are you sure you want to delete this catalog: ${this.props.catalog.title}?`;
     }
 
     render() {

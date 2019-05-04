@@ -26,29 +26,29 @@ export const signOut = () => {
 export const createCatalog = formValues => async (dispatch, getState) => {
     const { userId } = getState().auth;
     const createdBy = userId;
-    const response = await catalogs.post('/tokens', { ...formValues, createdBy });
+    const response = await catalogs.post('/catalogs', { ...formValues, createdBy });
     dispatch({ type: CREATE_CATALOG, payload: response.data });
     history.push('/');
 };
 
 export const editCatalog = (id, formValues) => async dispatch => {
-    const response = await catalogs.put(`/tokens/${id}`, formValues);
+    const response = await catalogs.put(`/catalogs/${id}`, formValues);
     dispatch({ type: EDIT_CATALOG, payload: response.data });
     history.push('/');
 };
 
 export const fetchCatalogs = () => async dispatch => {
-    const response = await catalogs.get('/tokens');
+    const response = await catalogs.get('/catalogs');
     dispatch({ type: FETCH_CATALOGS, payload: response.data });
 };
 
 export const fetchCatalog = id => async dispatch => {
-    const response = await catalogs.get(`/tokens/${id}`);
+    const response = await catalogs.get(`/catalogs/${id}`);
     dispatch({ type: FETCH_CATALOG, payload: response.data });
 };
 
 export const deleteCatalog = id => async dispatch => {
-    await catalogs.delete(`/tokens/${id}`);
+    await catalogs.delete(`/catalogs/${id}`);
     dispatch({ type: DELETE_CATALOG, payload: id });
     history.push('/');
 };
