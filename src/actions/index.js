@@ -54,3 +54,33 @@ export const deleteCatalog = id => async dispatch => {
 };
 
 
+
+export const fetchStudent = () => {
+
+}
+export const fetchStudents = () => {
+
+}
+export const editStudent = () => {
+
+}
+
+
+
+export const fetchCopy = () => {
+
+}
+
+export const fetchCopies = () => {
+
+}
+
+
+
+export const fetchCourse = () => {
+
+}
+export const fetchCourses = () => {
+
+}
+

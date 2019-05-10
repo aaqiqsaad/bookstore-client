@@ -1,0 +1,95 @@
+#THIS NEEDS TO BE ONE DIRECTORY ABOVE
+#I PUT IT HERE SO I DON'T MAKE A NEW REPO FOR BUILD
+version: '3'
+services:
+  #  nginx:
+  #    build:
+  #      dockerfile: Dockerfile
+  #      context: ./nginx
+  #    ports:
+  #      - 80:80
+  #    depends_on:
+  #      - client
+  #      - api
+  #  api:
+  #    image: aaqiqsaad/bookstore-api
+  #    build:
+  #      dockerfile: Dockerfile
+  #      context: ./bookstore_api
+  #    environment:
+  #      PGHOST: postgres-main-db
+  #      PGDATABASE: postgres
+  #      PGUSER: postgres
+  #      PGPASSWORD: postgres
+  #      PGPORT: 5432
+  #      MARIADB: mariadb
+  #      REDIS_HOST: redis
+  #      REDIS_PORT: 6379
+  #    ports:
+  #      - 9093:9093
+  #    depends_on:
+  #      - mariadb
+  #  client:
+  #    image: aaqiqsaad/bookstore-client
+  #    build:
+  #      dockerfile: Dockerfile
+  #      context: ./bookstore_client
+  #    environment:
+  #      API_HOST: api
+  #      API_PORT: 9093
+  #    ports:
+  #      - 9094:3000
+  #    volumes:
+  #      - /app/node_modules
+  #      - ./bookstore_client:/app
+  #    depends_on:
+  #      - api
+  adminer:
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+      ADMINER_DEFAULT_DB_DRIVER: mysql
+      ADMINER_DEFAULT_DB_HOST: mariadb
+      ADMINER_DEFAULT_DB_NAME: adminer
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
+    depends_on:
+      - mariadb
+    ports:
+      - 9092:8080
+  mariadb:
+    image: wodby/mariadb
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_USER: adminer
+      MYSQL_PASSWORD: adminer
+      MYSQL_DATABASE: adminer
+    volumes:
+      - mariadbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
+#  postgres-main-db:
+#    image: 'postgres:latest'
+#    volumes:
+#      - postgresdata:/var/lib/postgresql/data
+#    ports:
+#      - 5432:5432
+#  redis:
+#    image: 'redis:latest'
+#  keycloak:
+#    image: 'jboss/keycloak:latest'
+#    environment:
+#      DB_VENDOR: POSTGRES
+#      DB_ADDR: postgres
+#      DB_DATABASE: postgres
+#      DB_USER: postgres
+#      DB_SCHEMA: public
+#      DB_PASSWORD: postgres
+#      KEYCLOAK_USER: keycloak
+#      KEYCLOAK_PASSWORD: keycloak
+#    ports:
+#      - 8080:8080
+volumes:
+  #  postgresdata:
+  mariadbdata:
