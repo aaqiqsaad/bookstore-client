@@ -39,7 +39,7 @@ export const editCatalog = (id, formValues) => async dispatch => {
 
 export const fetchCatalogs = () => async dispatch => {
     const response = await catalogs.get('/catalogs');
-    dispatch({ type: FETCH_CATALOGS, payload: response.data });
+    dispatch({ type: FETCH_CATALOGS, payload: response.data.content });
 };
 
 export const fetchCatalog = id => async dispatch => {
