@@ -26,11 +26,11 @@ class CatalogForm extends React.Component {
                 <div>{this.renderError(meta)}</div>
             </div>
         );
-    }
+    };
 
     onSubmit = (formValues) => {
         this.props.onSubmit(formValues);
-    }
+    };
 
     render () {
         return (

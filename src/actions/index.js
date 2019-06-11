@@ -5,8 +5,10 @@ import {
     CREATE_CATALOG,
     FETCH_CATALOG,
     FETCH_CATALOGS,
+    FETCH_PAGE_COUNT,
     DELETE_CATALOG,
-    EDIT_CATALOG
+    EDIT_CATALOG,
+    SET_OFFSET, SET_PAGE_SIZE, ADD_SORTING_CRITERIA_SORT_BY, ADD_SORTING_CRITERIA_SORT_TYPE, SEARCH_KEYWORD
 } from "./types";
 import history from '../history';
 
@@ -37,8 +39,13 @@ export const editCatalog = (id, formValues) => async dispatch => {
     history.push('/');
 };
 
-export const fetchCatalogs = () => async dispatch => {
-    const response = await catalogs.get('/catalogs');
+export const fetchCatalogs = (offset, pageSize, sortBy, ascOrDesc, search) => async dispatch => {
+    let url = `/catalogs?page=${offset}&size=${pageSize}&sort=${sortBy},${ascOrDesc}`;
+    if(search){
+        url = `/catalogs?page=${offset}&size=${pageSize}&sort=${sortBy},${ascOrDesc}&search=title:${search}`;
+    }
+    const response = await catalogs.get(url);
+    dispatch({ type: FETCH_PAGE_COUNT, payload: response.data.totalPages });
     dispatch({ type: FETCH_CATALOGS, payload: response.data.content });
 };
 
@@ -52,6 +59,28 @@ export const deleteCatalog = id => async dispatch => {
     dispatch({ type: DELETE_CATALOG, payload: id });
     history.push('/');
 };
+
+export const setOffset = offset => async dispatch => {
+    dispatch({ type: SET_OFFSET, payload: offset });
+};
+
+export const setPageSize = pageSize => async dispatch => {
+    dispatch({ type: SET_PAGE_SIZE, payload: pageSize });
+};
+
+export const addSortingCriteriaSortBy = (sortBy) => async dispatch => {
+    dispatch({ type: ADD_SORTING_CRITERIA_SORT_BY, payload: sortBy });
+};
+
+export const addSortingCriteriaSortType = (ascOrDesc) => async dispatch => {
+    dispatch({ type: ADD_SORTING_CRITERIA_SORT_TYPE, payload: ascOrDesc });
+};
+
+export const setSearchKeyword = (search) => async dispatch => {
+    dispatch({ type: SEARCH_KEYWORD, payload: search });
+};
+
+
 
 
 

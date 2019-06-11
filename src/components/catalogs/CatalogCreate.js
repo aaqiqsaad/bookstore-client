@@ -8,7 +8,7 @@ class CatalogCreate extends React.Component {
 
     onSubmit = (formValues) => {
         this.props.createCatalog(formValues);
-    }
+    };
 
     render () {
         return (
