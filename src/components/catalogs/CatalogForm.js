@@ -33,13 +33,24 @@ class CatalogForm extends React.Component {
     };
 
     render () {
-        return (
-            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-                <Field name="title" component={this.renderInput} label="Enter the Title" />
-                <Field name="author" component={this.renderInput} label="Enter the Author" />
-                <button className="ui button primary">Submit</button>
-            </form>
-        );
+        if(this.props.isAddCopies) {
+            return (
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
+                    <Field name="numCopies" component={this.renderInput} label="Enter the number of copies to add" />
+                </form>
+            );
+        } else {
+            return (
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
+                    <Field name="title" component={this.renderInput} label="Enter the Title" />
+                    <Field name="author" component={this.renderInput} label="Enter the author name" />
+                    <Field name="edition" component={this.renderInput} label="Enter the Edition" />
+                    <Field name="price" component={this.renderInput} label="Enter the price" />
+                    <button className="ui button primary">Submit</button>
+                </form>
+            );
+        }
+
     }
 }
 

@@ -8,8 +8,8 @@ class MicrosoftAuth extends React.Component {
     componentDidMount() {
         this.msalConfig = {
             auth: {
-                clientId: "38ffdb5a-2b34-4965-8ab0-b08aba53a913",
-                authority: "https://login.microsoftonline.com/670f9adc-d736-4e91-ac14-24fb608a486c"
+                clientId: "6e575e76-c11a-4461-b107-b2b078df2e61",
+                authority: "https://login.microsoftonline.com/7025e04c-70ca-48bf-ab7b-73954cb846ad"
             },
             cache: {
                 cacheLocation: "localStorage",

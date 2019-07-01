@@ -12,9 +12,9 @@ export const menuOptions = [
         image: { avatar: true, src: catalogsPic }
     },
     {
-        key: 'Students',
-        text: 'Students',
-        value: 'Students',
+        key: 'Patrons',
+        text: 'Patrons',
+        value: 'Patrons',
         image: { avatar: true, src: studentsPic }
     },
     {
@@ -37,7 +37,7 @@ export const menuOptions = [
     }
 ];
 
-export const sortingOptions = [
+export const catalogSortingOptions = [
     {
         key: 'title',
         text: 'title',
@@ -57,6 +57,53 @@ export const sortingOptions = [
         key: 'edition',
         text: 'edition',
         value: 'edition'
+    }
+];
+
+export const patronSortingOptions = [
+    {
+        key: 'idNum',
+        text: 'Patron ID',
+        value: 'idNum'
+    },
+    {
+        key: 'firstName',
+        text: 'First Name',
+        value: 'firstName'
+    },
+    {
+        key: 'lastName',
+        text: 'Last Name',
+        value: 'lastName'
+    },
+    {
+        key: 'status',
+        text: 'Status',
+        value: 'status'
+    }
+];
+
+
+export const courseSortingOptions = [
+    {
+        key: 'id',
+        text: 'id',
+        value: 'id'
+    },
+    {
+        key: 'crsCde',
+        text: 'crsCde',
+        value: 'crsCde'
+    },
+    {
+        key: 'trmCde',
+        text: 'trmCde',
+        value: 'trmCde'
+    },
+    {
+        key: 'yrCde',
+        text: 'yrCde',
+        value: 'yrCde'
     }
 ];
 

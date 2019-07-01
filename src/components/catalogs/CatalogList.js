@@ -2,14 +2,23 @@ import React from 'react';
 import Pagination from 'semantic-ui-react-button-pagination';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchCatalogs, setOffset, setPageSize, addSortingCriteriaSortBy, addSortingCriteriaSortType, setSearchKeyword } from '../../actions';
-import SortAndSearchBar from './SortAndSearchBar';
+import {
+    fetchCatalogs,
+    setCatalogOffset,
+    setCatalogPageSize,
+    addCatalogSortingCriteriaSortBy,
+    addCatalogSortingCriteriaSortType,
+    setCatalogSearchKeyword
+} from '../../actions';
+import SortAndSearchBar from '../SortAndSearchBar';
+import { Table } from 'semantic-ui-react'
+
 
 
 class CatalogList extends React.Component {
 
     componentDidMount() {
-        this.props.fetchCatalogs(this.props.offset, this.props.pageSize, this.props.sortBy, this.props.sortType, this.props.search);
+        this.props.fetchCatalogs(this.props.catalogOffset, this.props.catalogPageSize, this.props.catalogSortBy, this.props.catalogAscOrDesc, this.props.catalogSearch);
     }
 
     renderAdmin(catalog) {
@@ -28,66 +37,110 @@ class CatalogList extends React.Component {
     }
 
     renderList() {
-        return this.props.catalogs.map(catalog => {
-            return (
-                <div className="item" key={catalog.id}>
-                    {this.renderAdmin(catalog)}
-                    <i className="large middle aligned icon camera" />
-                    <div className="content">
-                        <Link to={`/catalogs/${catalog.id}`} className="header" >
-                            {catalog.title}
-                        </Link>
-                        <div className="description">
-                            {catalog.author}
-                        </div>
-                    </div>
-                </div>
+
+            const head = (
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>Catalog Number</Table.HeaderCell>
+                        <Table.HeaderCell>Title</Table.HeaderCell>
+                        <Table.HeaderCell>Author</Table.HeaderCell>
+                        <Table.HeaderCell>Edition</Table.HeaderCell>
+                        <Table.HeaderCell>Price</Table.HeaderCell>
+                        <Table.HeaderCell>Actions</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
             );
-        });
+
+            const table_element = this.props.catalogs.map(catalog => {
+                return (
+                    <Table.Row key={catalog.id}>
+                        <Table.Cell singleLine>
+                            <Link to={`/catalogs/${catalog.id}`}>
+                                {catalog.id}
+                            </Link>
+                        </Table.Cell>
+                        <Table.Cell singleLine>
+                            <Link to={`/catalogs/${catalog.id}`}>
+                                {catalog.title}
+                            </Link>
+                        </Table.Cell>
+                        <Table.Cell>{catalog.author}</Table.Cell>
+                        <Table.Cell>{catalog.edition}</Table.Cell>
+                        <Table.Cell>{catalog.price}</Table.Cell>
+                        <Table.Cell>{this.renderAdmin(catalog)}</Table.Cell>
+                    </Table.Row>
+                );
+            });
+
+        return (
+
+            <div>
+                <Table celled padded>
+                    {head}
+                    <Table.Body>
+                        {table_element}
+                    </Table.Body>
+                </Table>
+            </div>
+        );
+
     }
 
     renderCreate() {
         if(this.props.isSignedIn) {
             return (
-                <div style={{ textAlign: 'right' }}>
-                    <Link to="/catalogs/new" className="ui button primary">
-                        Create Catalog
-                    </Link>
-                </div>
+                <Table celled padded>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell colSpan='7' singleLine>
+                                <Link
+                                    to={`/catalogs/new`}
+                                    className="ui green plus button"
+                                    style={{ marginLeft: '20px'}}
+                                >
+                                    <i className="plus icon"/>
+                                    Add Catalog
+                                </Link>
+                            </Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                </Table>
             );
         }
     }
 
-    handleClick(offset) {
-        this.props.setOffset(offset);
-        this.props.fetchCatalogs(offset, this.props.pageSize, this.props.sortBy, this.props.sortType, this.props.search);
+    handleClick(catalogOffset) {
+        this.props.setCatalogOffset(catalogOffset);
+        this.props.fetchCatalogs(catalogOffset, this.props.catalogPageSize, this.props.catalogSortBy, this.props.catalogAscOrDesc, this.props.catalogSearch);
     }
 
     render () {
         return (
             <div>
                 <SortAndSearchBar
-                    addSortingCriteriaSortBy={this.props.addSortingCriteriaSortBy}
-                    addSortingCriteriaSortType={this.props.addSortingCriteriaSortType}
-                    setPageSize={this.props.setPageSize}
-                    setSearchKeyword={this.props.setSearchKeyword}
-                    fetchCatalogs={this.props.fetchCatalogs}
-                    offset={this.props.offset}
-                    pageSize={this.props.pageSize}
-                    sortBy={this.props.sortBy}
-                    sortType={this.props.sortType}
-                    search={this.props.search}
+                    barType='catalog'
+                    addSortingCriteriaSortBy={this.props.addCatalogSortingCriteriaSortBy}
+                    addSortingCriteriaSortType={this.props.addCatalogSortingCriteriaSortType}
+                    setPageSize={this.props.setCatalogPageSize}
+                    setSearchKeyword={this.props.setCatalogSearchKeyword}
+                    fetchElements={this.props.fetchCatalogs}
+                    offset={this.props.catalogOffset}
+                    pageSize={this.props.catalogPageSize}
+                    sortBy={this.props.catalogSortBy}
+                    sortType={this.props.catalogAscOrDesc}
+                    search={this.props.catalogSearch}
                 />
+                {this.renderCreate()}
                 <div className="ui celled list">
                     {this.renderList()}
                 </div>
-                {this.renderCreate()}
+
 
                 <Pagination
-                    offset={this.props.offset}
+                    offset={this.props.catalogOffset}
                     limit={1}
-                    total={this.props.totalPages}
-                    onClick={(e, props, offset) => this.handleClick(offset)}
+                    total={this.props.catalogTotalPages}
+                    onClick={(e, props, catalogOffset) => this.handleClick(catalogOffset)}
                 />
 
             </div>
@@ -101,20 +154,20 @@ const mapStateToProps = (state) => {
         catalogs: Object.values(state.catalogs),
         currentUserId: state.auth.userId,
         isSignedIn: state.auth.isSignedIn,
-        totalPages: state.paging.totalPages,
-        offset: state.paging.offset,
-        pageSize: state.paging.pageSize,
-        sortBy: state.paging.sortBy,
-        sortType: state.paging.ascOrDesc,
-        search: state.paging.search
+        catalogTotalPages: state.paging.catalogTotalPages,
+        catalogOffset: state.paging.catalogOffset,
+        catalogPageSize: state.paging.catalogPageSize,
+        catalogSortBy: state.paging.catalogSortBy,
+        catalogAscOrDesc: state.paging.catalogAscOrDesc,
+        catalogSearch: state.paging.catalogSearch
     };
 };
 
 export default connect(mapStateToProps, {
     fetchCatalogs,
-    setOffset,
-    setPageSize,
-    addSortingCriteriaSortBy,
-    addSortingCriteriaSortType,
-    setSearchKeyword
+    setCatalogOffset,
+    setCatalogPageSize,
+    addCatalogSortingCriteriaSortBy,
+    addCatalogSortingCriteriaSortType,
+    setCatalogSearchKeyword
 })(CatalogList);

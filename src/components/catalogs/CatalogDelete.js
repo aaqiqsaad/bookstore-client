@@ -21,7 +21,7 @@ class CatalogDelete extends React.Component {
         return (
             <React.Fragment>
                 <button onClick={ () => this.props.deleteCatalog(id) } className="ui button negative">Delete</button>
-                <Link to="/" className="ui button">Cancel</Link>
+                <Link to="/catalogs" className="ui button">Cancel</Link>
             </React.Fragment>
         );
     }
@@ -39,7 +39,7 @@ class CatalogDelete extends React.Component {
                 title="Delete Catalog"
                 content={this.renderContent()}
                 actions={this.renderAction()}
-                onDismiss={() => history.push('/')}
+                onDismiss={() => history.push('/catalogs')}
             />
         );
     }
